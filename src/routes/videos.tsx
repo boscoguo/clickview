@@ -1,7 +1,10 @@
+import React from 'react'
+import VideosPage from '../pages/videos/videosPage'
+
 export function Videos() {
   return (
     <main>
-      <h1>Videos route</h1>
+      <VideosPage />
     </main>
   )
 }

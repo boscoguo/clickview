@@ -1,7 +1,8 @@
-import { Container } from 'react-bootstrap';
-import { Outlet } from 'react-router-dom';
+import React from 'react'
+import { Container } from 'react-bootstrap'
+import { Outlet } from 'react-router-dom'
 
-import Navigation from './navigation';
+import Navigation from './navigation'
 
 export default function Layout() {
   return (
@@ -11,5 +12,5 @@ export default function Layout() {
         <Outlet />
       </Container>
     </>
-  );
+  )
 }
