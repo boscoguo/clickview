@@ -9,7 +9,6 @@ const PlaylistVideosPage: React.FC<PlaylistVideos> = ({ id }) => {
   const [videosData, setVideosData] = useState<Video[]>([])
 
   useEffect(() => {
-    console.log(1111)
     const fetchPlayListData = async () => {
       const res = await fetch('../playlists.json')
       const data = await res.json()

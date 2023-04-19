@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner'
 
 const PlaylistsPage = () => {
   const [data, setData] = useState<Playlist[]>([])
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('./playlists.json')
@@ -14,13 +15,33 @@ const PlaylistsPage = () => {
     }
     fetchData()
   }, [])
+
+  const createPlayList = () => {
+    const newPlayList = {
+      name: 'new one',
+      description: '',
+      id: 2038133,
+      videoIds: [128178, 128147],
+      dateCreated: '2021-02-22T03:28:02',
+    }
+    setData(prevPlayList => [...prevPlayList, newPlayList])
+  }
   const isFetchedData = !!data.length
   return (
     <>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginBottom: '10px',
+        }}
+      >
+        <button onClick={createPlayList}>Create</button>
+      </div>
       {isFetchedData ? (
         data.map(item => (
           <Link key={item.id} to={`/playlists/${item.id}`}>
-            <PlaylistItem playlist={item} />
+            <PlaylistItem playlist={item} setPlayList={setData} />
           </Link>
         ))
       ) : (
