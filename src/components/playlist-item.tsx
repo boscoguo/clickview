@@ -14,9 +14,10 @@ export function PlaylistItem(props: PlaylistItemProps) {
 
   const deletPlayList = (id: number, e: any) => {
     e.preventDefault()
-    setPlayList(prePlaylist =>
-      prePlaylist.filter(playlist => playlist.id !== id),
-    )
+    setPlayList(prePlaylist => {
+      const newPlayList = prePlaylist.filter(playlist => playlist.id !== id)
+      return newPlayList
+    })
   }
 
   const videoCount =

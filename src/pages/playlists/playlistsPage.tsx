@@ -21,14 +21,19 @@ const PlaylistsPage = () => {
     fetchData()
   }, [])
 
+  const generateRandomId = () => {
+    return Math.floor(Math.random() * 9000000) + 1000000
+  }
+
   const createPlayList = () => {
     const newPlayList = {
       name: 'new one',
       description: '',
-      id: 2038133,
+      id: generateRandomId(),
       videoIds: [128178, 128147],
       dateCreated: '2021-02-22T03:28:02',
     }
+
     setData(prevPlayList => [...prevPlayList, newPlayList])
   }
 
@@ -87,6 +92,7 @@ const PlaylistsPage = () => {
     dataClone.splice(currentPlayListIndex, 1, newCurrentPlayList)
     localStorage.setItem('localPlaylist', JSON.stringify(dataClone))
     setData(dataClone)
+    handleClose()
   }
 
   const isFetchedData = !!data.length
