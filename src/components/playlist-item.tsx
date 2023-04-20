@@ -5,12 +5,12 @@ import { Playlist } from '../interfaces/playlist'
 interface PlaylistItemProps {
   playlist: Playlist
   setPlayList: React.Dispatch<React.SetStateAction<Playlist[]>>
-  onAddVideos: (id: number, e: any) => void
+  handleOpenModal: (id: number, e: any) => void
   handleShow: () => void
 }
 
 export function PlaylistItem(props: PlaylistItemProps) {
-  const { playlist, setPlayList, onAddVideos, handleShow } = props
+  const { playlist, setPlayList, handleOpenModal, handleShow } = props
 
   const deletPlayList = (id: number, e: any) => {
     e.preventDefault()
@@ -18,10 +18,6 @@ export function PlaylistItem(props: PlaylistItemProps) {
       prePlaylist.filter(playlist => playlist.id !== id),
     )
   }
-
-  // const onAddVideos = (id: number, e: any) => {
-  //   e.preventDefault()
-  // }
 
   const videoCount =
     playlist.videoIds.length === 1
@@ -40,7 +36,7 @@ export function PlaylistItem(props: PlaylistItemProps) {
       <Col xs="12" md="2">
         <button
           onClick={e => {
-            onAddVideos(playlist.id, e)
+            handleOpenModal(playlist.id, e)
             handleShow()
           }}
         >

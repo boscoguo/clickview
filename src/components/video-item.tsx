@@ -3,17 +3,28 @@ import { Col, Image, Row } from 'react-bootstrap'
 import { Video } from '../interfaces/video'
 import { useParams } from 'react-router-dom'
 import { Playlist } from '../interfaces/playlist'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 interface VideoItemProps {
   video: Video
   canDelete?: boolean
   playListData?: Playlist[]
   setPlayListData?: React.Dispatch<React.SetStateAction<Playlist[]>>
+  canAdd?: boolean
+  handleCheckboxClick?: (id: number, e: any) => void
 }
 
 export default function VideoItem(props: VideoItemProps) {
-  const { video, canDelete = false, playListData, setPlayListData } = props
+  const {
+    video,
+    canDelete = false,
+    playListData,
+    canAdd = false,
+    setPlayListData,
+    handleCheckboxClick,
+  } = props
   const params = useParams()
+
   const onDelete = (id: number) => {
     setPlayListData &&
       setPlayListData(prevPlayList => {
@@ -42,6 +53,10 @@ export default function VideoItem(props: VideoItemProps) {
       })
   }
 
+  // const handleCheckboxClick = (e: any) => {
+  //   console.log('e', e)
+  // }
+
   return (
     <Row>
       <Col xs="12" md="3" className="mb-3">
@@ -53,10 +68,18 @@ export default function VideoItem(props: VideoItemProps) {
           className="w-100"
         />
       </Col>
-      <Col xs="12" md="8" className="mb-3">
+      <Col xs="12" md="6" className="mb-3">
         <h2 className="h4">{video.name}</h2>
         <p>{video.description}</p>
       </Col>
+      {canAdd && (
+        <Col xs="12" md="2">
+          <InputGroup.Checkbox
+            aria-label="Checkbox for following text input"
+            onClick={(e: any) => handleCheckboxClick?.(video.id, e)}
+          />
+        </Col>
+      )}
       {canDelete && (
         <Col
           xs="12"
