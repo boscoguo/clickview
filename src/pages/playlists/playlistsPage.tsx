@@ -4,14 +4,11 @@ import { PlaylistItem } from '../../components/playlist-item'
 import { Link } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 import AddVideosModal from '../../components/addVideosModal'
-// import { Modal } from 'react-bootstrap'
 
-const PlaylistsPage = (props: any) => {
+const PlaylistsPage = () => {
   const [data, setData] = useState<Playlist[]>([])
   const [show, setShow] = useState<boolean>(false)
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
   useEffect(() => {
     const localPlaylist = localStorage.getItem('localPlaylist')
     const fetchData = async () => {
@@ -37,11 +34,10 @@ const PlaylistsPage = (props: any) => {
     e.preventDefault()
   }
 
-  // const modalProps = {
-  //   show: modalShow,
-  //   onHide: () => setModalShow(false),
-  //   ...props,
-  // }
+  const handleClose = () => setShow(false)
+
+  const handleShow = () => setShow(true)
+
   const isFetchedData = !!data.length
   return (
     <>
@@ -61,14 +57,14 @@ const PlaylistsPage = (props: any) => {
               playlist={item}
               setPlayList={setData}
               onAddVideos={onAddVideos}
+              handleShow={handleShow}
             />
           </Link>
         ))
       ) : (
         <Spinner animation="border" variant="warning" />
       )}
-      <AddVideosModal />
-      {/* <AddVideosModal {...modalProps} /> */}
+      <AddVideosModal show={show} handleClose={handleClose} />
     </>
   )
 }

@@ -3,17 +3,12 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { AddVideosModaProps } from '../interfaces/addVideosModal'
 
-const AddVideosModal: React.FC = () => {
-  const [show, setShow] = useState(false)
-
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+const AddVideosModal: React.FC<AddVideosModaProps> = ({
+  show,
+  handleClose,
+}) => {
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

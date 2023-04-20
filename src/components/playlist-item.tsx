@@ -6,10 +6,11 @@ interface PlaylistItemProps {
   playlist: Playlist
   setPlayList: React.Dispatch<React.SetStateAction<Playlist[]>>
   onAddVideos: (id: number, e: any) => void
+  handleShow: () => void
 }
 
 export function PlaylistItem(props: PlaylistItemProps) {
-  const { playlist, setPlayList, onAddVideos } = props
+  const { playlist, setPlayList, onAddVideos, handleShow } = props
 
   const deletPlayList = (id: number, e: any) => {
     e.preventDefault()
@@ -37,7 +38,14 @@ export function PlaylistItem(props: PlaylistItemProps) {
         <p className="mb-0">{playlist.description}</p>
       </Col>
       <Col xs="12" md="2">
-        <button onClick={e => onAddVideos(playlist.id, e)}>add videos</button>
+        <button
+          onClick={e => {
+            onAddVideos(playlist.id, e)
+            handleShow()
+          }}
+        >
+          add videos
+        </button>
       </Col>
       <Col xs="12" md="1" onClick={e => deletPlayList(playlist.id, e)}>
         x
