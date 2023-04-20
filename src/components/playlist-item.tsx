@@ -5,17 +5,22 @@ import { Playlist } from '../interfaces/playlist'
 interface PlaylistItemProps {
   playlist: Playlist
   setPlayList: React.Dispatch<React.SetStateAction<Playlist[]>>
+  onAddVideos: (id: number, e: any) => void
 }
 
 export function PlaylistItem(props: PlaylistItemProps) {
-  const { playlist, setPlayList } = props
-  console.log('playList', playlist)
+  const { playlist, setPlayList, onAddVideos } = props
+
   const deletPlayList = (id: number, e: any) => {
     e.preventDefault()
     setPlayList(prePlaylist =>
       prePlaylist.filter(playlist => playlist.id !== id),
     )
   }
+
+  // const onAddVideos = (id: number, e: any) => {
+  //   e.preventDefault()
+  // }
 
   const videoCount =
     playlist.videoIds.length === 1
@@ -28,8 +33,11 @@ export function PlaylistItem(props: PlaylistItemProps) {
         <h2 className="h5">{playlist.name}</h2>
         <p className="mb-0">{videoCount}</p>
       </Col>
-      <Col xs="12" md="8">
+      <Col xs="12" md="6">
         <p className="mb-0">{playlist.description}</p>
+      </Col>
+      <Col xs="12" md="2">
+        <button onClick={e => onAddVideos(playlist.id, e)}>add videos</button>
       </Col>
       <Col xs="12" md="1" onClick={e => deletPlayList(playlist.id, e)}>
         x

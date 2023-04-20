@@ -6,13 +6,15 @@ import VideoItem from '../../components/video-item'
 
 const PlaylistVideosPage: React.FC<PlaylistVideos> = ({ id }) => {
   const [playListData, setPlayListData] = useState<Playlist[]>([])
+
   const [videosData, setVideosData] = useState<Video[]>([])
 
   useEffect(() => {
+    const localPlaylist = localStorage.getItem('localPlaylist')
     const fetchPlayListData = async () => {
       const res = await fetch('../playlists.json')
       const data = await res.json()
-      setPlayListData(data)
+      setPlayListData(localPlaylist ? JSON.parse(localPlaylist) : data)
     }
     fetchPlayListData()
   }, [])
@@ -35,7 +37,13 @@ const PlaylistVideosPage: React.FC<PlaylistVideos> = ({ id }) => {
   return (
     <>
       {videosInPlayList.map(video => (
-        <VideoItem key={video.id} video={video} />
+        <VideoItem
+          key={video.id}
+          video={video}
+          canDelete={true}
+          playListData={playListData}
+          setPlayListData={setPlayListData}
+        />
       ))}
     </>
   )

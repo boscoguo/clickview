@@ -3,15 +3,21 @@ import { Playlist } from '../../interfaces/playlist'
 import { PlaylistItem } from '../../components/playlist-item'
 import { Link } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
+import AddVideosModal from '../../components/addVideosModal'
+// import { Modal } from 'react-bootstrap'
 
-const PlaylistsPage = () => {
+const PlaylistsPage = (props: any) => {
   const [data, setData] = useState<Playlist[]>([])
+  const [show, setShow] = useState<boolean>(false)
 
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
   useEffect(() => {
+    const localPlaylist = localStorage.getItem('localPlaylist')
     const fetchData = async () => {
       const res = await fetch('./playlists.json')
       const data = await res.json()
-      setData(data)
+      setData(localPlaylist ? JSON.parse(localPlaylist) : data)
     }
     fetchData()
   }, [])
@@ -26,6 +32,16 @@ const PlaylistsPage = () => {
     }
     setData(prevPlayList => [...prevPlayList, newPlayList])
   }
+
+  const onAddVideos = (id: number, e: any) => {
+    e.preventDefault()
+  }
+
+  // const modalProps = {
+  //   show: modalShow,
+  //   onHide: () => setModalShow(false),
+  //   ...props,
+  // }
   const isFetchedData = !!data.length
   return (
     <>
@@ -41,12 +57,18 @@ const PlaylistsPage = () => {
       {isFetchedData ? (
         data.map(item => (
           <Link key={item.id} to={`/playlists/${item.id}`}>
-            <PlaylistItem playlist={item} setPlayList={setData} />
+            <PlaylistItem
+              playlist={item}
+              setPlayList={setData}
+              onAddVideos={onAddVideos}
+            />
           </Link>
         ))
       ) : (
         <Spinner animation="border" variant="warning" />
       )}
+      <AddVideosModal />
+      {/* <AddVideosModal {...modalProps} /> */}
     </>
   )
 }
